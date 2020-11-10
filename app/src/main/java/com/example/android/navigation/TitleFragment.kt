@@ -20,7 +20,7 @@ class TitleFragment : Fragment() {
 
         //tombol play
         binding.playButton.setOnClickListener{
-            Navigation.findNavController(it).navigate(R.id.action_titleFragment_to_gameFragment)
+            Navigation.findNavController(it).navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
         }
 
         //kasih tau kalau title fragment kalau ada menu
