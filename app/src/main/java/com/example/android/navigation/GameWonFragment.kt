@@ -16,11 +16,11 @@
 
 package com.example.android.navigation
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -38,12 +38,48 @@ class GameWonFragment : Fragment() {
             view?.findNavController()?.navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
         }
 
-        //ngambil argument (data) dari fragment sebelumnya
-        var args = GameWonFragmentArgs.fromBundle(arguments!!)
-        Toast.makeText(context, "Num Correct ${args.numCorrect}\n" +
-                "Num Question ${args.numCorrect} ", Toast.LENGTH_LONG)
 
+        /*Toast.makeText(context, "Num Correct ${args.numCorrect}\n" +
+                "Num Question ${args.numCorrect} ", Toast.LENGTH_LONG)*/
+
+        //ngasih tau kalau GameWonfargment ada menu
+        setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.winner_menu, menu)
+    }
+
+    //fungsi yang terjadi apabila menu diklik
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item!!.itemId){ //ngecek apa yang di klik di menu
+            R.id.share -> shareSuccess()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun getShareIntent() : Intent{
+        //ngambil argument (data) dari fragment sebelumnya
+        var args = GameWonFragmentArgs.fromBundle(arguments!!)
+
+        var shareIntent = Intent(Intent.ACTION_SEND) //buat implicit intent yang aksinya ngesend
+
+        //mengembalikan sebuah implicit intent
+        return ShareCompat.IntentBuilder.from(activity!!)
+                .setChooserTitle("Mau bagi via app apa ?")
+                .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestion))
+                .setType("test/plain")
+                .intent
+
+        //settext itu buat naruh tulisan yang ada di choosenya
+        //getstring itu buat ambil string dari xml value
+    }
+
+    private fun shareSuccess(){
+        startActivity(getShareIntent())
     }
 }
