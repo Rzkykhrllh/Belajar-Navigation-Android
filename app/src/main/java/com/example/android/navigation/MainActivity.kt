@@ -19,12 +19,14 @@ package com.example.android.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         //back button in actionbar
         val navController = this.findNavController(R.id.myNavHostFragment) //find navcontroller
         NavigationUI.setupActionBarWithNavController(this, navController) //conect nav controller to action bar
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

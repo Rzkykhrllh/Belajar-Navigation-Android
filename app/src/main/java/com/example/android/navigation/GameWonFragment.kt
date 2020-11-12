@@ -48,6 +48,7 @@ class GameWonFragment : Fragment() {
         return binding.root
     }
 
+    //fungsi wajib kalau setHasOptionsMenu nya true
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater?.inflate(R.menu.winner_menu, menu)
@@ -66,13 +67,12 @@ class GameWonFragment : Fragment() {
         //ngambil argument (data) dari fragment sebelumnya
         var args = GameWonFragmentArgs.fromBundle(arguments!!)
 
-        var shareIntent = Intent(Intent.ACTION_SEND) //buat implicit intent yang aksinya ngesend
 
         //mengembalikan sebuah implicit intent
         return ShareCompat.IntentBuilder.from(activity!!)
-                .setChooserTitle("Mau bagi via app apa ?")
+                .setChooserTitle("Share make apa ?")
                 .setText(getString(R.string.share_success_text, args.numCorrect, args.numQuestion))
-                .setType("test/plain")
+                .setType("text/plain") //tipe implicit
                 .intent
 
         //settext itu buat naruh tulisan yang ada di choosenya
